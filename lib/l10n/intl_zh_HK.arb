@@ -8,10 +8,10 @@
   "noData": "沒有結果",
   "error": "哎呀, 網絡錯誤, 請點擊屏幕重試",
 
-  "tabTrendingTitle": "趨勢",
-  "tabNewsTitle": "新聞",
+  "tabHomeTitle": "首頁",
+  "tabStoreTitle": "商店",
   "tabSearchTitle": "搜索",
-  "tabStarsTitle": "關注",
+  "tabCartTitle": "購物車",
   "tabMeTitle": "我的",
 
   "loading": "加載中",

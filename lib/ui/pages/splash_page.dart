@@ -3,15 +3,14 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_app_boilerplate/common/constant/gitter_constants.dart';
-
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/ui/pages/notifications/message.dart';
 import 'package:flutter_app_boilerplate/ui/pages/tab_navigator.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -61,7 +60,7 @@ class _SplashPageState extends State<SplashPage>
         SplashScreen(
           seconds: 6,
           title: Text(
-            GitterLocalizations.of(context)!.welcome,
+            FlutterBoilerplateLocalizations.of(context)!.welcome,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
           ),
           navigateAfterSeconds: const TabNavigator(),
@@ -69,12 +68,12 @@ class _SplashPageState extends State<SplashPage>
           styleTextUnderTheLoader: const TextStyle(),
           backgroundColor: _theme.colorScheme.background,
           photoSize: 100.0,
-          onClick: () => printInfoLog(GitterConstants.appName),
+          onClick: () => printInfoLog(FlutterBoilerplateConstants.appName),
           useLoader: true,
           customLoader: const Loader(
             size: 40,
           ),
-          loadingText: Text(GitterLocalizations.of(context)!.loading),
+          loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
           loadingTextPadding: const EdgeInsets.only(bottom: 80),
           loaderColor: Color(themeState.color!),
         ),

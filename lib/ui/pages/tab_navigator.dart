@@ -3,16 +3,19 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Tab;
+import 'package:flutter_app_boilerplate/common/constant/cart_constants.dart';
+import 'package:flutter_app_boilerplate/common/constant/home_constants.dart';
+import 'package:flutter_app_boilerplate/common/constant/store_constants.dart';
+import 'package:flutter_app_boilerplate/ui/pages/cart/cart_page.dart';
+import 'package:flutter_app_boilerplate/ui/pages/home/home_page.dart';
+import 'package:flutter_app_boilerplate/ui/pages/store/store_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_app_boilerplate/common/constant/me_constants.dart';
-import 'package:flutter_app_boilerplate/common/constant/news_constants.dart';
 import 'package:flutter_app_boilerplate/common/constant/search_constants.dart';
-import 'package:flutter_app_boilerplate/common/constant/stars_constants.dart';
-import 'package:flutter_app_boilerplate/common/constant/trending_constants.dart';
 import 'package:flutter_app_boilerplate/common/iconfonts/iconfonts.dart';
 import 'package:flutter_app_boilerplate/common/model/tab.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/bottom_tabs/bottom_tabs_bloc.dart';
@@ -20,19 +23,16 @@ import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dar
 import 'package:flutter_app_boilerplate/ui/blocs/me/settings/click_sound/click_sound_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/tabs/tabs_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/pages/me/mine_page.dart';
-import 'package:flutter_app_boilerplate/ui/pages/news/news_page.dart';
 import 'package:flutter_app_boilerplate/ui/pages/search/search_page.dart';
-import 'package:flutter_app_boilerplate/ui/pages/stars/stars_page.dart';
-import 'package:flutter_app_boilerplate/ui/pages/trending/trending_page.dart';
 import 'package:flutter_app_boilerplate/ui/widgets/fire_button.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:uni_links/uni_links.dart';
 
 Map<String, Widget> pageMap = {
-  TrendingConstants.module: const TrendingPage(),
-  NewsConstants.module: const NewsPage(),
+  HomeConstants.module: const HomePage(),
+  StoreConstants.module: const StorePage(),
   SearchConstants.module: const SearchPage(),
-  StarsConstants.module: const StarsPage(),
+  CartConstants.module: const CartPage(),
   MeConstants.module: const MinePage(),
 };
 
@@ -140,19 +140,19 @@ class _TabNavigatorState extends State<TabNavigator>
       List<Tab> tabs, DarkModeState darkModeState) {
     var _theme = Theme.of(context);
     var _labelMap = <String, String>{
-      TrendingConstants.module:
-          GitterLocalizations.of(context)!.tabTrendingTitle,
-      NewsConstants.module: GitterLocalizations.of(context)!.tabNewsTitle,
-      SearchConstants.module: GitterLocalizations.of(context)!.tabSearchTitle,
-      StarsConstants.module: GitterLocalizations.of(context)!.tabStarsTitle,
-      MeConstants.module: GitterLocalizations.of(context)!.tabMeTitle,
+      HomeConstants.module:
+          FlutterBoilerplateLocalizations.of(context)!.tabHomeTitle,
+      StoreConstants.module: FlutterBoilerplateLocalizations.of(context)!.tabStoreTitle,
+      SearchConstants.module: FlutterBoilerplateLocalizations.of(context)!.tabSearchTitle,
+      CartConstants.module: FlutterBoilerplateLocalizations.of(context)!.tabCartTitle,
+      MeConstants.module: FlutterBoilerplateLocalizations.of(context)!.tabMeTitle,
     };
     var items = <BottomNavigationBarItem>[];
     tabs.asMap().forEach((index, tab) {
       items.add(BottomNavigationBarItem(
         label: _labelMap[tab.text],
         icon: Icon(
-          IconDataGitHub(
+          IconFont(
             tab.iconData!,
             matchTextDirection: true,
           ),
@@ -161,7 +161,7 @@ class _TabNavigatorState extends State<TabNavigator>
         activeIcon: FireButton(
           controller: _animationController,
           child: Icon(
-            IconDataGitHub(
+            IconFont(
               tab.iconData!,
               matchTextDirection: true,
             ),

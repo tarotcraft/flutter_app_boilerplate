@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/constant/search_constants.dart';
-import 'package:flutter_app_boilerplate/common/iconfonts/iconfonts.dart';
 import 'package:flutter_app_boilerplate/common/utils/cache_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
@@ -16,26 +15,17 @@ import 'package:flutter_app_boilerplate/ui/widgets/search.dart';
 
 List<Function> _categories = [
   (BuildContext context, String value) =>
-      GitterLocalizations.of(context)!.searchWithRepo(value),
+      FlutterBoilerplateLocalizations.of(context)!.searchWithRepo(value),
   (BuildContext context, String value) =>
-      GitterLocalizations.of(context)!.searchWithIssues(value),
+      FlutterBoilerplateLocalizations.of(context)!.searchWithIssues(value),
   (BuildContext context, String value) =>
-      GitterLocalizations.of(context)!.searchWithPulls(value),
+      FlutterBoilerplateLocalizations.of(context)!.searchWithPulls(value),
   (BuildContext context, String value) =>
-      GitterLocalizations.of(context)!.searchWithPeople(value),
+      FlutterBoilerplateLocalizations.of(context)!.searchWithPeople(value),
   (BuildContext context, String value) =>
-      GitterLocalizations.of(context)!.searchWithOrg(value),
+      FlutterBoilerplateLocalizations.of(context)!.searchWithOrg(value),
   (BuildContext context, String value) =>
-      GitterLocalizations.of(context)!.searchJumpTo(value),
-];
-
-List<IconData> _leadingIcons = [
-  IconFonts.repo,
-  IconFonts.issue,
-  IconFonts.pull,
-  Icons.people,
-  IconFonts.organization,
-  Icons.arrow_forward
+      FlutterBoilerplateLocalizations.of(context)!.searchJumpTo(value),
 ];
 
 List<Function> _actions = [
@@ -54,7 +44,9 @@ List<Function> _actions = [
   (BuildContext context, String searchText) {
     // TODO: do something.
   },
-  (BuildContext context, String searchText) {},
+  (BuildContext context, String searchText) {
+    // TODO: do something.
+  },
 ];
 
 class SearchPage extends StatefulWidget {
@@ -90,7 +82,7 @@ class _SearchPageState extends State<SearchPage>
                     hideRight: true,
                     hideSpeak: false,
                     tapped: state.tapped,
-                    hint: GitterLocalizations.of(context)!.searchHit,
+                    hint: FlutterBoilerplateLocalizations.of(context)!.searchHit,
                     defaultText: state.text,
                     speakClick: () {
                       NavigatorUtil.push(context, const SearchSpeakPage());
@@ -140,13 +132,13 @@ class _SearchPageState extends State<SearchPage>
           padding: const EdgeInsets.only(left: 16, right: 12),
           child: BlocBuilder<DarkModeBloc, DarkModeState>(
             builder: (context, state) => ProfileItem(
-              leading: Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Icon(
-                  _leadingIcons[index],
-                  size: 16,
-                ),
-              ),
+              // leading: Padding(
+              //   padding: const EdgeInsets.only(right: 16),
+              //   child: Icon(
+              //     _leadingIcons[index],
+              //     size: 16,
+              //   ),
+              // ),
               content: Text(
                 '${_categories[index](context, searchText)}',
               ),

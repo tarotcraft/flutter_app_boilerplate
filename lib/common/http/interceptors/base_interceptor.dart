@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_app_boilerplate/common/constant/gitter_constants.dart';
+import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
 
 class BaseInterceptor extends InterceptorsWrapper {
   final String baseUrl;
@@ -10,9 +10,9 @@ class BaseInterceptor extends InterceptorsWrapper {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options
       ..baseUrl = baseUrl
-      ..connectTimeout = GitterConstants.timeOut * 1000 //5s
-      ..receiveTimeout = GitterConstants.timeOut * 1000
-      ..headers.addAll(GitterConstants.headers);
+      ..connectTimeout = FlutterBoilerplateConstants.timeOut * 1000 //5s
+      ..receiveTimeout = FlutterBoilerplateConstants.timeOut * 1000
+      ..headers.addAll(FlutterBoilerplateConstants.headers);
     super.onRequest(options, handler);
   }
 }

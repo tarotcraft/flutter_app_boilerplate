@@ -1,10 +1,12 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
+import 'package:flutter_app_boilerplate/common/constant/home_constants.dart';
+import 'package:flutter_app_boilerplate/common/enums/home_types.dart';
+import 'package:flutter_app_boilerplate/ui/pages/home/news_page.dart';
+import 'package:flutter_app_boilerplate/ui/pages/home/notifiactions_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_app_boilerplate/common/constant/gitter_constants.dart';
-import 'package:flutter_app_boilerplate/common/constant/trending_constants.dart';
-import 'package:flutter_app_boilerplate/common/enums/trending_types.dart';
 import 'package:flutter_app_boilerplate/common/model/language_model.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/bottom_tabs/bottom_tabs_bloc.dart';
@@ -12,17 +14,17 @@ import 'package:flutter_app_boilerplate/ui/blocs/option/options_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/trending/trending_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/widgets/option_dialog.dart';
 
-const repoName = 'Repository';
-const devName = 'Developer';
+const newsName = 'News';
+const notificationsName = 'Notifications';
 
-class TrendingPage extends StatefulWidget {
-  const TrendingPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _TrendingPageState createState() => _TrendingPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _TrendingPageState extends State<TrendingPage>
+class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController? _controller;
 
@@ -30,13 +32,13 @@ class _TrendingPageState extends State<TrendingPage>
   void initState() {
     final trendingBloc = BlocProvider.of<TrendingBloc>(context);
     final currentTab = trendingBloc.state.currentTab;
-    final initialIndex = currentTab == TrendingType.repository ? 0 : 1;
+    final initialIndex = currentTab == HomeType.news ? 0 : 1;
     _controller = TabController(
         initialIndex: initialIndex,
-        length: GitterConstants.tabs.length,
+        length: FlutterBoilerplateConstants.tabs.length,
         vsync: this)
       ..addListener(() {
-        final currentTab = GitterConstants.tabs[_controller!.index];
+        final currentTab = FlutterBoilerplateConstants.tabs[_controller!.index];
         BlocProvider.of<TrendingBloc>(context)
             .add(TrendingAddEvent(currentTab));
       });
@@ -68,16 +70,16 @@ class _TrendingPageState extends State<TrendingPage>
                     Container(
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Text(
-                        TrendingType.repository == state.currentTab ? repoName : devName,
+                        HomeType.news == state.currentTab ? newsName : notificationsName,
                       ),
                     ),
                     DotsIndicator(
                       onTap: (index) {
                         printInfoLog(index);
                       },
-                      dotsCount: GitterConstants.tabs.length,
+                      dotsCount: FlutterBoilerplateConstants.tabs.length,
                       position:
-                          TrendingType.repository == state.currentTab ? 0 : 1,
+                          HomeType.news == state.currentTab ? 0 : 1,
                       decorator: DotsDecorator(
                         size: const Size.square(9.0),
                         color: _theme.bottomAppBarColor,
@@ -88,39 +90,6 @@ class _TrendingPageState extends State<TrendingPage>
                         ),
                       ),
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   crossAxisAlignment: CrossAxisAlignment.end,
-                    //   children: <Widget>[
-                    //     Container(
-                    //       padding: EdgeInsets.only(right: 6),
-                    //       child: PhysicalModel(
-                    //         color: TrendingType.repository == state.currentTab
-                    //             ? _theme.primaryColor
-                    //             : _theme.bottomAppBarColor,
-                    //         clipBehavior: Clip.antiAlias,
-                    //         borderRadius: BorderRadius.circular(2),
-                    //         child: Container(
-                    //           width: 4,
-                    //           height: 4,
-                    //           child: Text(StringUtil.STRING_EMPTY),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     PhysicalModel(
-                    //       color: TrendingType.developer == state.currentTab
-                    //           ? _theme.primaryColor
-                    //           : _theme.bottomAppBarColor,
-                    //       clipBehavior: Clip.antiAlias,
-                    //       borderRadius: BorderRadius.circular(2),
-                    //       child: Container(
-                    //         width: 4,
-                    //         height: 4,
-                    //         child: Text(StringUtil.STRING_EMPTY),
-                    //       ),
-                    //     )
-                    //   ],
-                    // )
                   ],
                 ),
                 Positioned(
@@ -148,18 +117,19 @@ class _TrendingPageState extends State<TrendingPage>
               BlocBuilder<BottomTabsBloc, BottomTabsState>(
                   builder: (context, bottomTabsState) {
             if (bottomTabsState.refresh &&
-                bottomTabsState.module == TrendingConstants.module) {
+                bottomTabsState.module == HomeConstants.module) {
               BlocProvider.of<BottomTabsBloc>(context)
-                  .add(const BottomTabsInitEvent(false, TrendingConstants.module));
+                  .add(const BottomTabsInitEvent(false, HomeConstants.module));
               Future.delayed(const Duration(milliseconds: 500), () {
                 _reloadData(trending1State.currentTab, true);
               });
             }
             return TabBarView(
               controller: _controller,
-              children: GitterConstants.tabs.map((String tab) {
-                return Center(child: Text(tab),);
-              }).toList(),
+              children: const [
+                NewsPage(),
+                NotificationsPage(),
+              ],
             );
           }),
         ),
@@ -172,8 +142,8 @@ class _TrendingPageState extends State<TrendingPage>
         context,
         MaterialPageRoute<OptionDialogAction>(
           builder: (BuildContext context) => OptionDialog(
-            tabs: TrendingConstants.dialogTabs,
-            tabNames: TrendingConstants.dialogTabNames,
+            tabs: HomeConstants.dialogTabs,
+            tabNames: HomeConstants.dialogTabNames,
             selectSince: (index) {
               BlocProvider.of<OptionsBloc>(context)
                   .add(OptionsTabIndexAddEvent(index, null, currentTab));
@@ -197,13 +167,13 @@ class _TrendingPageState extends State<TrendingPage>
     final optionsBloc = BlocProvider.of<OptionsBloc>(context);
     var language = optionsBloc.state.optionLanguage!.text;
     var since = describeEnum(
-        TrendingConstants.dialogTabs[optionsBloc.state.optionTabIndex!]);
+        HomeConstants.dialogTabs[optionsBloc.state.optionTabIndex!]);
     _loadDataByTab(currentTab, since, language, pullDown);
   }
 
   void _loadDataByTab(
       String? currentTab, String since, String? language, bool pullDown) {
-    if (currentTab == TrendingType.repository) {
+    if (currentTab == HomeType.news) {
       // TODO: do something.
     } else {
       // TODO: do something.

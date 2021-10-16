@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -30,7 +30,7 @@ class AboutMoreTopPage extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: ProfileItem(
               content: Text(
-                GitterLocalizations.of(context)!.author,
+                FlutterBoilerplateLocalizations.of(context)!.author,
               ),
               action: BlocBuilder<DarkModeBloc, DarkModeState>(
                 builder: (context, state) => Icon(
@@ -84,7 +84,7 @@ class AboutMoreTopPage extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: ProfileItem(
               content: Text(
-                GitterLocalizations.of(context)!.scoring,
+                FlutterBoilerplateLocalizations.of(context)!.scoring,
               ),
               action: BlocBuilder<DarkModeBloc, DarkModeState>(
                 builder: (context, state) => Icon(
@@ -105,7 +105,7 @@ class AboutMoreTopPage extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           child: ProfileItem(
             content: Text(
-              GitterLocalizations.of(context)!.share,
+              FlutterBoilerplateLocalizations.of(context)!.share,
             ),
             action: BlocBuilder<DarkModeBloc, DarkModeState>(
               builder: (context, state) => Icon(

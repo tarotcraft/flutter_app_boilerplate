@@ -83,7 +83,7 @@ class _SettingsBottomBarPageState extends State<SettingsBottomBarPage> {
                       leading: Padding(
                         padding: const EdgeInsets.only(left: 14),
                         child: Icon(
-                          IconDataGitHub(tab.iconData!,
+                          IconFont(tab.iconData!,
                               matchTextDirection: true),
                           size: 20,
                           color:

@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter/gestures.dart';
@@ -39,7 +39,7 @@ class _SettingsFeedbackPageState extends State<SettingsFeedbackPage> {
           ),
         ),
         title: Text(
-          GitterLocalizations.of(context)!.feedback,
+          FlutterBoilerplateLocalizations.of(context)!.feedback,
         ),
       ),
       body: Column(
@@ -80,7 +80,7 @@ class _SettingsFeedbackPageState extends State<SettingsFeedbackPage> {
               onPressed: () {
                 // TODO: do something.
               },
-              child: Text(GitterLocalizations.of(context)!.submit),
+              child: Text(FlutterBoilerplateLocalizations.of(context)!.submit),
             ),
           ),
           Container(
@@ -89,7 +89,7 @@ class _SettingsFeedbackPageState extends State<SettingsFeedbackPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Text(GitterLocalizations.of(context)!.tips),
+                Text(FlutterBoilerplateLocalizations.of(context)!.tips),
                 RichText(
                   textAlign: TextAlign.end,
                   text: TextSpan(

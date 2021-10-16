@@ -11,7 +11,7 @@ import 'package:flutter_app_boilerplate/common/constant/me_constants.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/object_util.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/bottom_tabs/bottom_tabs_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/l10n/l10n_bloc.dart';
@@ -45,7 +45,7 @@ class _MinePageState extends State<MinePage> {
       builder: (ctx, darkModeState) => Scaffold(
         appBar: AppBar(
           title: Text(
-            GitterLocalizations.of(context)!.tabMeTitle,
+            FlutterBoilerplateLocalizations.of(context)!.tabMeTitle,
           ),
         ),
         body: BlocBuilder<BottomTabsBloc, BottomTabsState>(

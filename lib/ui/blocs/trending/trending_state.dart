@@ -8,7 +8,7 @@ abstract class TrendingState {
 }
 
 class TrendingLoading extends TrendingState {
-  const TrendingLoading({currentTab = TrendingType.repository}) : super(currentTab);
+  const TrendingLoading({currentTab = HomeType.news}) : super(currentTab);
 
   @override
   String toString() => 'TrendingLoading';

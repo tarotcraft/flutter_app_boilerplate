@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_app_boilerplate/common/constant/trending_constants.dart';
+import 'package:flutter_app_boilerplate/common/constant/home_constants.dart';
 import 'package:meta/meta.dart';
 
 part 'bottom_tabs_event.dart';

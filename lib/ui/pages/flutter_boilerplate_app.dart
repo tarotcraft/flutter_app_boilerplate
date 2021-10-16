@@ -5,14 +5,14 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
-import 'package:flutter_app_boilerplate/common/constant/gitter_constants.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -61,12 +61,12 @@ void backgroundCallback(Uri? data) async {
   }
 }
 
-class GitterApp extends StatefulWidget {
+class FlutterBoilerplateApp extends StatefulWidget {
   final FlutterLocalNotificationsPlugin flutterLocalNotifications;
   final AndroidNotificationChannel channel;
   final Workmanager workManager;
 
-  const GitterApp({
+  const FlutterBoilerplateApp({
     Key? key,
     required this.flutterLocalNotifications,
     required this.channel,
@@ -74,10 +74,10 @@ class GitterApp extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GitterAppState createState() => _GitterAppState();
+  _FlutterBoilerplateAppState createState() => _FlutterBoilerplateAppState();
 }
 
-class _GitterAppState extends State<GitterApp> {
+class _FlutterBoilerplateAppState extends State<FlutterBoilerplateApp> {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
@@ -137,7 +137,7 @@ class _GitterAppState extends State<GitterApp> {
                   iconTheme: IconThemeData(color: Color(themeState.color!)),
                 ),
               ),
-              title: GitterConstants.appName,
+              title: FlutterBoilerplateConstants.appName,
               themeMode: state.themeMode,
               builder: BotToastInit(),
               navigatorObservers: [observer, BotToastNavigatorObserver()],
@@ -152,8 +152,8 @@ class _GitterAppState extends State<GitterApp> {
               ),
               locale: l10State.locale,
               localizationsDelegates:
-                  GitterLocalizations.localizationsDelegates,
-              supportedLocales: GitterLocalizations.supportedLocales,
+                  FlutterBoilerplateLocalizations.localizationsDelegates,
+              supportedLocales: FlutterBoilerplateLocalizations.supportedLocales,
               debugShowCheckedModeBanner: false,
             ),
           ),

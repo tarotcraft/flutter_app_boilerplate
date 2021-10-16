@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -120,9 +120,9 @@ class SettingsCenterPage extends StatelessWidget {
   List<Widget> _list(context) {
     var widgets = <Widget>[];
     var _titles = <String>[
-      GitterLocalizations.of(context)!.theme,
-      GitterLocalizations.of(context)!.darkMode,
-      GitterLocalizations.of(context)!.bottomTabBar,
+      FlutterBoilerplateLocalizations.of(context)!.theme,
+      FlutterBoilerplateLocalizations.of(context)!.darkMode,
+      FlutterBoilerplateLocalizations.of(context)!.bottomTabBar,
     ];
     _titles.asMap().forEach((index, title) {
       widgets.add(GestureDetector(

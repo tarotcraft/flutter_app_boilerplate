@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/pages/me/settings/settings_bottom_page.dart';
@@ -24,7 +24,7 @@ class SettingsMorePage extends StatelessWidget {
           ),
         ),
         title: Text(
-          GitterLocalizations.of(context)!.settings,
+          FlutterBoilerplateLocalizations.of(context)!.settings,
         ),
       ),
       body: BlocBuilder<DarkModeBloc, DarkModeState>(

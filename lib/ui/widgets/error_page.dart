@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 
 class ErrorPage extends StatelessWidget {
   final Function reload;
@@ -22,7 +22,7 @@ class ErrorPage extends StatelessWidget {
               size: 24,
             ),
             Text(
-                GitterLocalizations.of(context)!.error,
+                FlutterBoilerplateLocalizations.of(context)!.error,
             ),
           ],
         ),

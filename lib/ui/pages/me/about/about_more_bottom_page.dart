@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
@@ -30,14 +30,14 @@ class AboutMoreBottomPage extends StatelessWidget {
                 context,
                 GitterInAppWebview(
                   url: 'https://github.com/gitterapp/gitterapp-feedback/wiki',
-                  title: GitterLocalizations.of(context)!.help,
+                  title: FlutterBoilerplateLocalizations.of(context)!.help,
                 ),
               );
             },
             behavior: HitTestBehavior.opaque,
             child: ProfileItem(
               content: Text(
-                  GitterLocalizations.of(context)!.help,
+                  FlutterBoilerplateLocalizations.of(context)!.help,
               ),
               action: BlocBuilder<DarkModeBloc, DarkModeState>(
                 builder: (context, state) => Icon(
@@ -66,7 +66,7 @@ class AboutMoreBottomPage extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: ProfileItem(
               content: Text(
-                GitterLocalizations.of(context)!.privacy,
+                FlutterBoilerplateLocalizations.of(context)!.privacy,
               ),
               action: BlocBuilder<DarkModeBloc, DarkModeState>(
                 builder: (context, state) => Icon(
@@ -89,7 +89,7 @@ class AboutMoreBottomPage extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: ProfileItem(
               content: Text(
-                GitterLocalizations.of(context)!.license,
+                FlutterBoilerplateLocalizations.of(context)!.license,
               ),
               action: BlocBuilder<DarkModeBloc, DarkModeState>(
                 builder: (context, state) => Icon(

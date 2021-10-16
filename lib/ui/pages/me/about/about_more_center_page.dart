@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -33,7 +33,7 @@ class AboutMoreCenterPage extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: ProfileItem(
               content: Text(
-                GitterLocalizations.of(context)!.qqGroup,
+                FlutterBoilerplateLocalizations.of(context)!.qqGroup,
               ),
               action: BlocBuilder<DarkModeBloc, DarkModeState>(
                 builder: (context, state) => Icon(

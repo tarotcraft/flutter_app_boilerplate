@@ -11,7 +11,7 @@ abstract class BottomTabsState {
 class BottomTabsPreInitial extends BottomTabsState {
   const BottomTabsPreInitial({
     bool refresh = false,
-    String module = TrendingConstants.module,
+    String module = HomeConstants.module,
   }) : super(refresh, module);
 
   @override

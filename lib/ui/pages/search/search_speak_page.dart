@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
@@ -39,7 +39,7 @@ class _SearchSpeakPageState extends State<SearchSpeakPage>
 
   @override
   void didChangeDependencies() {
-    speakTips = GitterLocalizations.of(context)!.searchLongPress;
+    speakTips = FlutterBoilerplateLocalizations.of(context)!.searchLongPress;
     super.didChangeDependencies();
   }
 
@@ -69,7 +69,7 @@ class _SearchSpeakPageState extends State<SearchSpeakPage>
   Future<void> _speakStart() async {
     await _controller!.forward();
     setState(() {
-      speakTips = GitterLocalizations.of(context)!.searchSpeaking;
+      speakTips = FlutterBoilerplateLocalizations.of(context)!.searchSpeaking;
     });
     try {
       var result = await AsrManager.start();
@@ -85,7 +85,7 @@ class _SearchSpeakPageState extends State<SearchSpeakPage>
 
   void _speakStop() {
     setState(() {
-      speakTips = GitterLocalizations.of(context)!.searchLongPress;
+      speakTips = FlutterBoilerplateLocalizations.of(context)!.searchLongPress;
     });
     _controller!.reset();
     _controller!.stop();
@@ -99,7 +99,7 @@ class _SearchSpeakPageState extends State<SearchSpeakPage>
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
                   child: Text(
-                    GitterLocalizations.of(context)!.searchSpeakingTitle,
+                    FlutterBoilerplateLocalizations.of(context)!.searchSpeakingTitle,
                     style: TextStyle(
                       fontSize: 16,
                       color:

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -47,9 +47,9 @@ class UserSettingsPage extends StatelessWidget {
   List<Widget> _list(context) {
     var widgets = <Widget>[];
     var _titles = <String>[
-      GitterLocalizations.of(context)!.settings,
-      GitterLocalizations.of(context)!.about,
-      GitterLocalizations.of(context)!.feedback,
+      FlutterBoilerplateLocalizations.of(context)!.settings,
+      FlutterBoilerplateLocalizations.of(context)!.about,
+      FlutterBoilerplateLocalizations.of(context)!.feedback,
     ];
 
     _icons.asMap().forEach((index, icon) {

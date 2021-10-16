@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_app_boilerplate/common/constant/home_constants.dart';
+import 'package:flutter_app_boilerplate/common/enums/home_types.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
-import 'package:meta/meta.dart';
-import 'package:flutter_app_boilerplate/common/constant/trending_constants.dart';
-import 'package:flutter_app_boilerplate/common/enums/trending_types.dart';
 import 'package:flutter_app_boilerplate/common/model/language_model.dart';
 import 'package:flutter_app_boilerplate/common/utils/cache_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
+import 'package:meta/meta.dart';
 
 part 'options_event.dart';
 
@@ -87,15 +87,15 @@ class OptionsBloc extends Bloc<OptionsEvent, OptionsState> {
   }
 
   String _optionSinceKey(String? currentTab) {
-    return currentTab == TrendingType.repository
-            ? TrendingConstants.trendingRepositorySince
-            : TrendingConstants.trendingDeveloperSince;
+    return currentTab == HomeType.news
+            ? HomeConstants.trendingRepositorySince
+            : HomeConstants.trendingDeveloperSince;
   }
 
   String _optionLanguageKey(String? currentTab) {
-    return currentTab == TrendingType.repository
-            ? TrendingConstants.trendingRepositoryLanguage
-            : TrendingConstants.trendingDeveloperLanguage;
+    return currentTab == HomeType.news
+            ? HomeConstants.trendingRepositoryLanguage
+            : HomeConstants.trendingDeveloperLanguage;
   }
 
   void _print(String msg) {

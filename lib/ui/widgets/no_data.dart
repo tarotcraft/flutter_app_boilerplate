@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 
 class NoData extends StatelessWidget {
   const NoData({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class NoData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        GitterLocalizations.of(context)!.noData,
+        FlutterBoilerplateLocalizations.of(context)!.noData,
       ),
     );
   }

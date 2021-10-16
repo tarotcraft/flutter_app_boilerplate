@@ -43,15 +43,15 @@
     "placeholders": {}
   },
 
-  "tabTrendingTitle": "Trending",
-  "@tabTrendingTitle": {
-    "description": "Title for Trending tab of bottom navigation.",
+  "tabHomeTitle": "Home",
+  "@tabHomeTitle": {
+    "description": "Title for home tab of bottom navigation.",
     "type": "text",
     "placeholders": {}
   },
-  "tabNewsTitle": "News",
-  "@tabNewsTitle": {
-    "description": "Title for News tab of bottom navigation.",
+  "tabStoreTitle": "Store",
+  "@tabStoreTitle": {
+    "description": "Title for store tab of bottom navigation.",
     "type": "text",
     "placeholders": {}
   },
@@ -61,9 +61,9 @@
     "type": "text",
     "placeholders": {}
   },
-  "tabStarsTitle": "Stars",
-  "@tabStarsTitle": {
-    "description": "Title for Stars tab of bottom navigation.",
+  "tabCartTitle": "Cart",
+  "@tabCartTitle": {
+    "description": "Title for cart tab of bottom navigation.",
     "type": "text",
     "placeholders": {}
   },

@@ -6,13 +6,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app_boilerplate/ui/pages/flutter_boilerplate_app.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_app_boilerplate/common/utils/file_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/icloud_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/flutter_app_boilerplate_bloc_observer.dart';
-import 'package:flutter_app_boilerplate/ui/pages/gitter_app.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -149,7 +149,7 @@ Future main() async {
     appRunner: () => runApp(
       MultiProvider(
         providers: BlocProviders.blocProviders,
-        child: GitterApp(
+        child: FlutterBoilerplateApp(
           flutterLocalNotifications: flutterLocalNotificationsPlugin,
           channel: channel,
           workManager: workManager,

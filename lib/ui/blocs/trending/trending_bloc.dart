@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_app_boilerplate/common/enums/home_types.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter_app_boilerplate/common/enums/trending_types.dart';
 
 part 'trending_event.dart';
 

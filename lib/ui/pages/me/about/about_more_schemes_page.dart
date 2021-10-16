@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -79,7 +79,7 @@ class AboutMoreSchemesPage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: ProfileItem(
                           content: Text(
-                              GitterLocalizations.of(context)!.copyText,
+                              FlutterBoilerplateLocalizations.of(context)!.copyText,
                             style: const TextStyle(color: Colors.white),
                           ),
                           leading: Container(

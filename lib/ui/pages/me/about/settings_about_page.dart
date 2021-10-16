@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/widget_util.dart';
@@ -30,7 +30,7 @@ class SettingsAboutPage extends StatelessWidget {
           ),
         ),
         title: Text(
-          GitterLocalizations.of(context)!.about,
+          FlutterBoilerplateLocalizations.of(context)!.about,
         ),
       ),
       body: SingleChildScrollView(

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/l10n/l10n_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/widgets/profile_item.dart';
@@ -69,7 +69,7 @@ class SettingsBottomPage extends StatelessWidget {
             ),
             child: ProfileItem(
               content: Text(
-                GitterLocalizations.of(context)!.languages,
+                FlutterBoilerplateLocalizations.of(context)!.languages,
               ),
               action: _actionIcons[index](context, state.themeMode),
             ),
@@ -100,7 +100,7 @@ void _showDialog(BuildContext context) {
 }
 
 List<Widget> _languageWidgets(BuildContext context) {
-  var localeNames = GitterLocalizations.supportedLocales
+  var localeNames = FlutterBoilerplateLocalizations.supportedLocales
       .map((locale) => locale.toString())
       .toList();
   localeNames.insert(0, '');

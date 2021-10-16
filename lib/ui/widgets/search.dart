@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
 
 class Search extends StatefulWidget {
@@ -107,7 +107,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
             child: widget.hideRight
                 ? null
                 : Text(
-                    GitterLocalizations.of(context)!.searchHit,
+                    FlutterBoilerplateLocalizations.of(context)!.searchHit,
                     style: const TextStyle(color: Colors.blue, fontSize: 17),
                   ),
           ),

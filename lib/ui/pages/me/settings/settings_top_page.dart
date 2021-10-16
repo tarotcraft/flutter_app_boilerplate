@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/settings/click_sound/click_sound_bloc.dart';
 import 'package:vibration/vibration.dart';
@@ -96,7 +96,7 @@ List<Function?> _actions = [
       final result = await prefs.clear();
       BotToast.showSimpleNotification(
           title:
-              result ? GitterLocalizations.of(context)!.success : GitterLocalizations.of(context)!.failure);
+              result ? FlutterBoilerplateLocalizations.of(context)!.success : FlutterBoilerplateLocalizations.of(context)!.failure);
     } catch (e) {
       printErrorLog(e);
     }
@@ -125,11 +125,11 @@ class SettingsTopPage extends StatelessWidget {
   List<Widget> _list(context) {
     var widgets = <Widget>[];
     var _titles = <String>[
-      GitterLocalizations.of(context)!.clearCache,
+      FlutterBoilerplateLocalizations.of(context)!.clearCache,
       'Handoff',
-      GitterLocalizations.of(context)!.tactileFeedback,
-      GitterLocalizations.of(context)!.clickSound,
-      GitterLocalizations.of(context)!.fullScreenGestureReturn,
+      FlutterBoilerplateLocalizations.of(context)!.tactileFeedback,
+      FlutterBoilerplateLocalizations.of(context)!.clickSound,
+      FlutterBoilerplateLocalizations.of(context)!.fullScreenGestureReturn,
     ];
     _titles.asMap().forEach((index, title) {
       widgets.add(GestureDetector(

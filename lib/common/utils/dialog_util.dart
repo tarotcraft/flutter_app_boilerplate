@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_gen/gen_l10n/gitter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/theme/theme_bloc.dart';
 
 const int defaultThemeColor = 0xfffe9401;
@@ -13,7 +13,7 @@ class DialogUtil {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(GitterLocalizations.of(context)!.theme),
+        title: Text(FlutterBoilerplateLocalizations.of(context)!.theme),
         content: SingleChildScrollView(
           child: ColorPicker(
             pickerColor: _theme.primaryColor,

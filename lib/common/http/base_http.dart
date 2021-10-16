@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_boilerplate/common/constant/gitter_constants.dart';
+import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
 import 'package:flutter_app_boilerplate/common/http/interceptors/base_interceptor.dart';
 import 'package:flutter_app_boilerplate/common/http/interceptors/error_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -21,7 +21,7 @@ Future parseJson(String text) {
 }
 
 abstract class BaseHttp extends DioForNative {
-  BaseHttp({baseUrl = GitterConstants.githubApiPrefix}) {
+  BaseHttp({baseUrl = FlutterBoilerplateConstants.baseUrl}) {
     /// 初始化 加入app通用处理
     (transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
     interceptors.addAll([
