@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
@@ -20,21 +18,9 @@ import 'package:flutter_app_boilerplate/ui/blocs/me/l10n/l10n_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/theme/theme_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/pages/splash_page.dart';
 import 'package:flutter_app_boilerplate/ui/widgets/gitter_theme_data.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:workmanager/workmanager.dart';
-
-BannerAd bannerAd = BannerAd(
-  adUnitId: kDebugMode
-      ? BannerAd.testAdUnitId
-      : Platform.isAndroid
-          ? GitterConfig.bannerAppUnitIdAndroid
-          : GitterConfig.bannerAppUnitIdIOS,
-  size: AdSize.banner,
-  request: const AdRequest(),
-  listener: const BannerAdListener(),
-)..load();
 
 /// Called when Doing Background Work initiated from Widget
 void backgroundCallback(Uri? data) async {
@@ -147,7 +133,6 @@ class _FlutterBoilerplateAppState extends State<FlutterBoilerplateApp> {
                 child: SplashPage(
                   flutterLocalNotifications: widget.flutterLocalNotifications,
                   channel: widget.channel,
-                  bannerAd: bannerAd,
                 ),
               ),
               locale: l10State.locale,

@@ -60,6 +60,8 @@ class SplashScreen extends StatefulWidget {
   /// Future<String> or Future<Widget>
   final Future<Object>? navigateAfterFuture;
 
+  final bool shouldNavigate;
+
   static const _defaultStyleTextUnderTheLoader = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.bold,
@@ -88,33 +90,39 @@ class SplashScreen extends StatefulWidget {
     required this.useLoader,
     this.customLoader,
     this.routeName,
+    this.shouldNavigate = true,
   })  : assert(
-  routeName == null ||
-      (routeName is String && routeName.startsWith('/')),
+  shouldNavigate ||
+      (routeName == null ||
+          (routeName is String && routeName.startsWith('/'))),
   'routeName must be a String beginning with forward slash (/)',
   ),
         assert(
-        navigateAfterFuture == null ||
+        shouldNavigate ||
+            navigateAfterFuture == null ||
             navigateAfterFuture is Future<String> ||
             navigateAfterFuture is Future<Widget>,
         'navigateAfterFuture must be a Future<String> or Future<Widget>',
         ),
         assert(
-        navigateAfterFuture != null || seconds != null,
+        !shouldNavigate || navigateAfterFuture != null || seconds != null,
         'navigateAfterFuture and seconds cant be null at the same time',
         ),
         assert(
-        navigateAfterFuture != null ||
+        !shouldNavigate ||
+            navigateAfterFuture != null ||
             navigateAfterSeconds is String ||
             navigateAfterSeconds is Widget,
         'navigateAfterSeconds must either be a String or Widget',
         ),
         assert(
-        navigateAfterSeconds is! String ||
-            (navigateAfterSeconds is String &&
-                navigateAfterSeconds.startsWith('/')),
+        shouldNavigate ||
+            (navigateAfterSeconds is! String ||
+                (navigateAfterSeconds is String &&
+                    navigateAfterSeconds.startsWith('/'))),
         'navigateAfterSeconds must be a String beginning with forward slash (/)',
-        ), super(key: key);
+        ),
+        super(key: key);
 
   factory SplashScreen.timer({
     required int seconds,
@@ -194,6 +202,47 @@ class SplashScreen extends StatefulWidget {
         routeName: routeName,
       );
 
+  factory SplashScreen.navigate({
+    required bool shouldNavigate,
+    Future<Object>? navigateAfterFuture,
+    Color? loaderColor,
+    Color backgroundColor = Colors.white,
+    double? photoSize,
+    Text loadingText = const Text(''),
+    EdgeInsets loadingTextPadding = const EdgeInsets.only(top: 10.0),
+    Image? image,
+    Route? pageRoute,
+    GestureTapCallback? onClick,
+    dynamic navigateAfterSeconds,
+    Text title = const Text(''),
+    TextStyle styleTextUnderTheLoader = _defaultStyleTextUnderTheLoader,
+    ImageProvider? imageBackground,
+    Gradient? gradientBackground,
+    bool useLoader = true,
+    Widget? customLoader,
+    String? routeName,
+  }) =>
+      SplashScreen(
+        loaderColor: loaderColor,
+        navigateAfterFuture: navigateAfterFuture,
+        photoSize: photoSize,
+        loadingText: loadingText,
+        loadingTextPadding: loadingTextPadding,
+        backgroundColor: backgroundColor,
+        image: image,
+        pageRoute: pageRoute,
+        onClick: onClick,
+        navigateAfterSeconds: navigateAfterSeconds,
+        title: title,
+        styleTextUnderTheLoader: styleTextUnderTheLoader,
+        imageBackground: imageBackground,
+        gradientBackground: gradientBackground,
+        useLoader: useLoader,
+        customLoader: customLoader,
+        routeName: routeName,
+        shouldNavigate: shouldNavigate,
+      );
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -202,45 +251,48 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.navigateAfterFuture == null) {
-      Timer(Duration(seconds: widget.seconds!), () {
-        if (widget.navigateAfterSeconds is String) {
-          // It's fairly safe to assume this is using the in-built material
-          // named route component
-          Navigator.of(context).pushReplacementNamed(
-            widget.navigateAfterSeconds as String,
-          );
-        } else if (widget.navigateAfterSeconds is Widget) {
-          Navigator.of(context).pushReplacement(
-            widget.pageRoute != null
-                ? widget.pageRoute!
-                : MaterialPageRoute(
-              settings: widget.routeName != null
-                  ? RouteSettings(name: widget.routeName)
-                  : null,
-              builder: (context) => widget.navigateAfterSeconds as Widget,
-            ),
-          );
-        }
-      });
-    } else {
-      widget.navigateAfterFuture!.then((navigateTo) {
-        if (navigateTo is String) {
-          // It's fairly safe to assume this is using the in-built material
-          // named route component
-          Navigator.of(context).pushReplacementNamed(navigateTo);
-        } else if (navigateTo is Widget) {
-          Navigator.of(context).pushReplacement(
-            widget.pageRoute != null
-                ? widget.pageRoute!
-                : MaterialPageRoute(
+    if (widget.shouldNavigate) {
+      if (widget.navigateAfterFuture == null) {
+        Timer(Duration(seconds: widget.seconds!), () {
+          if (widget.navigateAfterSeconds is String) {
+            // It's fairly safe to assume this is using the in-built material
+            // named route component
+            Navigator.of(context).pushReplacementNamed(
+              widget.navigateAfterSeconds as String,
+            );
+          } else if (widget.navigateAfterSeconds is Widget) {
+            Navigator.of(context).pushReplacement(
+              widget.pageRoute != null
+                  ? widget.pageRoute!
+                  : MaterialPageRoute(
                 settings: widget.routeName != null
                     ? RouteSettings(name: widget.routeName)
                     : null,
-                builder: (context) => navigateTo),
-          );
-        }
-      });
+                builder: (context) =>
+                widget.navigateAfterSeconds as Widget,
+              ),
+            );
+          }
+        });
+      } else {
+        widget.navigateAfterFuture!.then((navigateTo) {
+          if (navigateTo is String) {
+            // It's fairly safe to assume this is using the in-built material
+            // named route component
+            Navigator.of(context).pushReplacementNamed(navigateTo);
+          } else if (navigateTo is Widget) {
+            Navigator.of(context).pushReplacement(
+              widget.pageRoute != null
+                  ? widget.pageRoute!
+                  : MaterialPageRoute(
+                  settings: widget.routeName != null
+                      ? RouteSettings(name: widget.routeName)
+                      : null,
+                  builder: (context) => navigateTo),
+            );
+          }
+        });
+      }
     }
   }
 

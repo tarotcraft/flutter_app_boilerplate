@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
 import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -19,16 +19,25 @@ import 'package:flutter_app_boilerplate/ui/widgets/loader.dart';
 import 'package:flutter_app_boilerplate/ui/widgets/splash_screen.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+BannerAd bannerAd = BannerAd(
+  adUnitId: kDebugMode
+      ? BannerAd.testAdUnitId
+      : Platform.isAndroid
+      ? GitterConfig.bannerAppUnitIdAndroid
+      : GitterConfig.bannerAppUnitIdIOS,
+  size: AdSize.banner,
+  request: const AdRequest(),
+  listener: const BannerAdListener(),
+);
+
 class SplashPage extends StatefulWidget {
   final FlutterLocalNotificationsPlugin flutterLocalNotifications;
   final AndroidNotificationChannel channel;
-  final BannerAd bannerAd;
 
   const SplashPage({
     Key? key,
     required this.flutterLocalNotifications,
     required this.channel,
-    required this.bannerAd,
   }) : super(key: key);
 
   @override
@@ -55,41 +64,80 @@ class _SplashPageState extends State<SplashPage>
 
   Widget _default(ThemeState themeState) {
     var _theme = Theme.of(context);
-    return Stack(
-      children: [
-        SplashScreen(
-          seconds: 6,
-          title: Text(
-            FlutterBoilerplateLocalizations.of(context)!.welcome,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-          ),
-          navigateAfterSeconds: const TabNavigator(),
-          image: Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
-          styleTextUnderTheLoader: const TextStyle(),
-          backgroundColor: _theme.colorScheme.background,
-          photoSize: 100.0,
-          onClick: () => printInfoLog(FlutterBoilerplateConstants.appName),
-          useLoader: true,
-          customLoader: const Loader(
-            size: 40,
-          ),
-          loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
-          loadingTextPadding: const EdgeInsets.only(bottom: 80),
-          loaderColor: Color(themeState.color!),
-        ),
-        Positioned(
-          bottom: (Platform.isIOS && MediaQuery.of(context).padding.bottom > 0)
-              ? 34
-              : 10,
-          child: Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width,
-            height: widget.bannerAd.size.height.toDouble(),
-            child: AdWidget(ad: widget.bannerAd),
-          ),
-        )
-      ],
+    var loadBannerAdFuture = _loadBannerAdFuture();
+    return FutureBuilder(
+      future: loadBannerAdFuture,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Stack(
+            children: [
+              SplashScreen.timer(
+                seconds: 5,
+                title: Text(
+                  FlutterBoilerplateLocalizations.of(context)!.welcome,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20.0),
+                ),
+                navigateAfterSeconds: const TabNavigator(),
+                image:
+                Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
+                styleTextUnderTheLoader: const TextStyle(),
+                backgroundColor: _theme.colorScheme.background,
+                photoSize: 100.0,
+                onClick: () => printInfoLog(FlutterBoilerplateConstants.appName),
+                useLoader: true,
+                customLoader: const Loader(
+                  size: 40,
+                ),
+                loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
+                loadingTextPadding: const EdgeInsets.only(bottom: 80),
+                loaderColor: Color(themeState.color!),
+              ),
+              Positioned(
+                bottom: (Platform.isIOS && MediaQuery.of(context).padding.bottom > 0)
+                    ? 34
+                    : 10,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width,
+                  height: bannerAd.size.height.toDouble(),
+                  child: AdWidget(ad: bannerAd),
+                ),
+              )
+            ],
+          );
+        } else {
+          return SplashScreen.navigate(
+            shouldNavigate: false,
+            title: Text(
+              FlutterBoilerplateLocalizations.of(context)!.welcome,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 20.0),
+            ),
+            image: Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
+            styleTextUnderTheLoader: const TextStyle(),
+            backgroundColor: _theme.colorScheme.background,
+            photoSize: 100.0,
+            onClick: () => printInfoLog(FlutterBoilerplateConstants.appName),
+            useLoader: true,
+            customLoader: const Loader(
+              size: 40,
+            ),
+            loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
+            loadingTextPadding: const EdgeInsets.only(bottom: 80),
+            loaderColor: Color(themeState.color!),
+          );
+        }
+      },
     );
+  }
+
+  Future<void> _loadBannerAdFuture() async {
+    try {
+      await bannerAd.load();
+    } on Exception catch(e) {
+      printErrorLog(e);
+    }
   }
 
   void _initFirebaseMessaging() {
