@@ -68,6 +68,30 @@ class _SplashPageState extends State<SplashPage>
     return FutureBuilder(
       future: loadBannerAdFuture,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if(snapshot.hasError) {
+          return SplashScreen.timer(
+            seconds: 5,
+            title: Text(
+              FlutterBoilerplateLocalizations.of(context)!.welcome,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 20.0),
+            ),
+            navigateAfterSeconds: const TabNavigator(),
+            image:
+            Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
+            styleTextUnderTheLoader: const TextStyle(),
+            backgroundColor: _theme.colorScheme.background,
+            photoSize: 100.0,
+            onClick: () => printInfoLog(FlutterBoilerplateConstants.appName),
+            useLoader: true,
+            customLoader: const Loader(
+              size: 40,
+            ),
+            loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
+            loadingTextPadding: const EdgeInsets.only(bottom: 80),
+            loaderColor: Color(themeState.color!),
+          );
+        }
         if (snapshot.connectionState == ConnectionState.done) {
           return Stack(
             children: [

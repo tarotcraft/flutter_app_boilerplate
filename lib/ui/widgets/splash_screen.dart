@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:core';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -248,30 +249,42 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  int? counter;
+
   @override
   void initState() {
     super.initState();
     if (widget.shouldNavigate) {
       if (widget.navigateAfterFuture == null) {
-        Timer(Duration(seconds: widget.seconds!), () {
-          if (widget.navigateAfterSeconds is String) {
-            // It's fairly safe to assume this is using the in-built material
-            // named route component
-            Navigator.of(context).pushReplacementNamed(
-              widget.navigateAfterSeconds as String,
-            );
-          } else if (widget.navigateAfterSeconds is Widget) {
-            Navigator.of(context).pushReplacement(
-              widget.pageRoute != null
-                  ? widget.pageRoute!
-                  : MaterialPageRoute(
-                settings: widget.routeName != null
-                    ? RouteSettings(name: widget.routeName)
-                    : null,
-                builder: (context) =>
-                widget.navigateAfterSeconds as Widget,
-              ),
-            );
+        setState(() {
+          counter = widget.seconds;
+        });
+        Timer.periodic(const Duration(seconds: 1), (timer) {
+          if(counter == 0) {
+            timer.cancel();
+            if (widget.navigateAfterSeconds is String) {
+              // It's fairly safe to assume this is using the in-built material
+              // named route component
+              Navigator.of(context).pushReplacementNamed(
+                widget.navigateAfterSeconds as String,
+              );
+            } else if (widget.navigateAfterSeconds is Widget) {
+              Navigator.of(context).pushReplacement(
+                widget.pageRoute != null
+                    ? widget.pageRoute!
+                    : MaterialPageRoute(
+                  settings: widget.routeName != null
+                      ? RouteSettings(name: widget.routeName)
+                      : null,
+                  builder: (context) =>
+                  widget.navigateAfterSeconds as Widget,
+                ),
+              );
+            }
+          } else {
+            setState(() {
+              counter = counter! - 1;
+            });
           }
         });
       } else {
@@ -372,6 +385,19 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ],
             ),
+            if(widget.navigateAfterFuture == null && counter != null) ...[
+              Positioned(
+                top: (Platform.isIOS && MediaQuery.of(context).padding.top > 0)
+                    ? 44
+                    : 10,
+                right: 10,
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: Text('$counter'),
+                ),
+              )
+            ]
           ],
         ),
       ),
