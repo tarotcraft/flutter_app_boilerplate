@@ -21,7 +21,7 @@ class OptionsInitEvent extends OptionsEvent {
 }
 
 class OptionsTabIndexAddEvent extends OptionsEvent {
-  const OptionsTabIndexAddEvent(optionTabIndex, Language? optionLanguage, currentTab)
+  const OptionsTabIndexAddEvent(String? currentTab, optionTabIndex, {Language? optionLanguage})
       : super(optionTabIndex, optionLanguage, currentTab);
 
   @override
@@ -31,7 +31,7 @@ class OptionsTabIndexAddEvent extends OptionsEvent {
 }
 
 class OptionsLanguageAddEvent extends OptionsEvent {
-  const OptionsLanguageAddEvent(int? optionTabIndex,  Language? optionLanguage, String? currentTab)
+  const OptionsLanguageAddEvent(String? currentTab,  Language? optionLanguage, {int? optionTabIndex})
       : super(optionTabIndex, optionLanguage, currentTab);
 
   @override

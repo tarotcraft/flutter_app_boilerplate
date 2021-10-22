@@ -1,5 +1,3 @@
-import 'package:flutter_app_boilerplate/common/enums/home_types.dart';
-
 /// FlutterBoilerplate
 class FlutterBoilerplateConstants {
   static const appName = 'FlutterBoilerplate';
@@ -21,8 +19,6 @@ class FlutterBoilerplateConstants {
   static const int timeOut = 20;
 
   static const int pageSize = 30;
-
-  static const List<String> tabs = [HomeType.news, HomeType.notifications];
 
   static const Map<String, String> headers = {'Accept': 'application/vnd.github.giant-sentry-fist-preview+json'};
 
