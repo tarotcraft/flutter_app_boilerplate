@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
 import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
+import 'package:flutter_app_boilerplate/ui/pages/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
 import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_app_boilerplate/ui/pages/notifications/message.dart';
-import 'package:flutter_app_boilerplate/ui/pages/tab_navigator.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/theme/theme_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/widgets/loader.dart';
@@ -76,7 +76,7 @@ class _SplashPageState extends State<SplashPage>
               style: const TextStyle(
                   fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
-            navigateAfterSeconds: const TabNavigator(),
+            navigateAfterSeconds: const LoginPage(),
             image:
             Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
             styleTextUnderTheLoader: const TextStyle(),
@@ -102,7 +102,7 @@ class _SplashPageState extends State<SplashPage>
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
-                navigateAfterSeconds: const TabNavigator(),
+                navigateAfterSeconds: const LoginPage(),
                 image:
                 Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
                 styleTextUnderTheLoader: const TextStyle(),
