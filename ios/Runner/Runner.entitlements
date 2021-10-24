@@ -10,8 +10,7 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>appclips:app.gitter.AppClip</string>
-		<string>applinks:gitter.app</string>
+		<string>applinks:store.gitterapp.com</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>

@@ -62,7 +62,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
-                        android:scheme="flutter_app_boilerplate"
+                        android:scheme="flutter_boilerplate"
                         android:host="user" />
             </intent-filter>
 
@@ -74,7 +74,7 @@
                 <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
                         android:scheme="https"
-                        android:host="gitter.app" />
+                        android:host="store.gitterapp.com" />
             </intent-filter>
         </activity>
 
