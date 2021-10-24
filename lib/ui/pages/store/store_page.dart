@@ -7,12 +7,13 @@ import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/l10n/l10n_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/theme/theme_bloc.dart';
+import 'package:flutter_app_boilerplate/ui/widgets/loader.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const String urlString = 'https://store.gitterapp.com';
-// const String urlString = 'http://localhost:8080';
+// const String urlString = 'http://localhost:8080/store.html';
 
 class StorePage extends StatefulWidget {
   const StorePage({Key? key}) : super(key: key);
@@ -28,9 +29,66 @@ class _StorePageState extends State<StorePage> {
   final CookieManager _cookieManager = CookieManager.instance();
 
   InAppWebViewController? _appWebViewController;
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
+    var _storeContent = Container(
+      margin: _margin,
+      padding: _padding,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: InAppWebView(
+          initialUrlRequest: URLRequest(
+            url: Uri.tryParse(urlString),
+          ),
+          initialOptions: InAppWebViewGroupOptions(
+            crossPlatform: InAppWebViewOptions(
+              cacheEnabled: false,
+              clearCache: true,
+            ),
+          ),
+          onWebViewCreated: (InAppWebViewController controller) async {
+            setState(() {
+              _loading = true;
+            });
+            _appWebViewController = controller;
+            await _initCookieManager();
+          },
+          onLoadError: (InAppWebViewController controller, Uri? url, int code,
+              String message) {
+            printErrorLog('code: $code, message: $message');
+          },
+          onLoadHttpError: (InAppWebViewController controller, Uri? url,
+              int statusCode, String description) {
+            printErrorLog('statusCode: $statusCode, description: $description');
+          },
+          onLoadStop: (InAppWebViewController controller, Uri? url) async {
+            setState(() {
+              _loading = false;
+            });
+            var themeMode =
+                BlocProvider.of<DarkModeBloc>(context).state.themeMode;
+            var defaultLocale = WidgetsBinding.instance!.window.locale;
+            var locale = BlocProvider.of<L10nBloc>(context).state.locale ??
+                defaultLocale;
+            var isDarkMode = DarkModeUtil.isDarkMode(context, themeMode);
+            var color = BlocProvider.of<ThemeBloc>(context).state.color ??
+                Theme.of(context).primaryColor;
+            var data = {
+              "darkMode": isDarkMode ? 'dark' : 'light',
+              "locale": locale.toString(),
+              "color": color
+            };
+            await _transportToWeb(json.encode(data));
+          },
+          onConsoleMessage: (InAppWebViewController controller,
+              ConsoleMessage consoleMessage) {
+            printWarningLog('consoleMessage: $consoleMessage');
+          },
+        ),
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -69,58 +127,15 @@ class _StorePageState extends State<StorePage> {
               },
             ),
           ],
-          child: Container(
-            margin: _margin,
-            padding: _padding,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.tryParse(urlString),
-                ),
-                initialOptions: InAppWebViewGroupOptions(
-                  crossPlatform: InAppWebViewOptions(
-                    cacheEnabled: false,
-                    clearCache: true,
-                  ),
-                ),
-                onWebViewCreated: (InAppWebViewController controller) async {
-                  _appWebViewController = controller;
-                  await _initCookieManager();
-                },
-                onLoadError: (InAppWebViewController controller, Uri? url,
-                    int code, String message) {
-                  printErrorLog('code: $code, message: $message');
-                },
-                onLoadHttpError: (InAppWebViewController controller, Uri? url,
-                    int statusCode, String description) {
-                  printErrorLog(
-                      'statusCode: $statusCode, description: $description');
-                },
-                onLoadStop:
-                    (InAppWebViewController controller, Uri? url) async {
-                  var themeMode =
-                      BlocProvider.of<DarkModeBloc>(context).state.themeMode;
-                  var defaultLocale = WidgetsBinding.instance!.window.locale;
-                  var locale =
-                      BlocProvider.of<L10nBloc>(context).state.locale ??
-                          defaultLocale;
-                  var isDarkMode = DarkModeUtil.isDarkMode(context, themeMode);
-                  var color = BlocProvider.of<ThemeBloc>(context).state.color ??
-                      Theme.of(context).primaryColor;
-                  var data = {
-                    "darkMode": isDarkMode ? 'dark' : 'light',
-                    "locale": locale.toString(),
-                    "color": color
-                  };
-                  await _transportToWeb(json.encode(data));
-                },
-                onConsoleMessage: (InAppWebViewController controller,
-                    ConsoleMessage consoleMessage) {
-                  printWarningLog('consoleMessage: $consoleMessage');
-                },
-              ),
-            ),
+          child: Stack(
+            children: [
+              _storeContent,
+              if(_loading) ...[
+                const Center(
+                  child: Loader(),
+                )
+              ],
+            ],
           ),
         ),
       ),
@@ -128,13 +143,13 @@ class _StorePageState extends State<StorePage> {
   }
 
   Future<void> _transportToWeb(data) async {
-    if(_appWebViewController != null) {
+    if (_appWebViewController != null) {
       if (!Platform.isAndroid ||
           await AndroidWebViewFeature.isFeatureSupported(
               AndroidWebViewFeature.CREATE_WEB_MESSAGE_CHANNEL)) {
         // wait until the page is loaded, and then create the Web Message Channel
         var webMessageChannel =
-        await _appWebViewController!.createWebMessageChannel();
+            await _appWebViewController!.createWebMessageChannel();
         var port1 = webMessageChannel!.port1;
         var port2 = webMessageChannel.port2;
 
@@ -154,6 +169,9 @@ class _StorePageState extends State<StorePage> {
   }
 
   Future<void> _handleRefresh() async {
+    setState(() {
+      _loading = true;
+    });
     _transportToWeb(json.encode({"pullDown": true}));
   }
 
