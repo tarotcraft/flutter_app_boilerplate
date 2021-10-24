@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-const String urlString = 'https://boilerplate.flutter.apps.upcwangying.com';
+const String urlString = 'https://store.gitterapp.com';
 // const String urlString = 'http://localhost:8080';
 
 class StorePage extends StatefulWidget {
