@@ -6,7 +6,7 @@ class StringUtil {
   static const space = ' ';
 
   static bool isBlank(String? str) {
-    return str == null || str == 'null' || str.isEmpty;
+    return str == null || str == 'null' || str.isEmpty || str.trim().isEmpty;
   }
 
   static bool isNotBlank(String? str) {

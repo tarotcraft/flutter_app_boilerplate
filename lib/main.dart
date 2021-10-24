@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
 import 'package:flutter_app_boilerplate/common/utils/cache_util.dart';
+import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
 import 'package:flutter_app_boilerplate/ui/pages/flutter_boilerplate_app.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -169,7 +170,8 @@ Future<void> _loadUserData() async {
       await CacheUtil.getCache(FlutterBoilerplateConstants.authorizationEmail);
   var authorizationPassword = await CacheUtil.getCache(
       FlutterBoilerplateConstants.authorizationPassword);
-  if (authorizationEmail != null && authorizationPassword != null) {
+  if (StringUtil.isNotBlank(authorizationEmail) &&
+      StringUtil.isNotBlank(authorizationPassword)) {
     UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(
             email: authorizationEmail, password: authorizationPassword);
