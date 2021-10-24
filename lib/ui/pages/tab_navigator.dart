@@ -126,8 +126,7 @@ class _TabNavigatorState extends State<TabNavigator>
                 });
               },
               type: BottomNavigationBarType.fixed,
-              unselectedLabelStyle: TextStyle(color: DarkModeUtil.darkModeColor(context, darkModeState.themeMode)),
-              selectedLabelStyle: TextStyle(color: _theme.colorScheme.primary),
+              selectedItemColor: _theme.primaryColor,
               items: _item(state.tabs, darkModeState),
             ),
           ),
