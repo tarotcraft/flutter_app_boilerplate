@@ -78,7 +78,7 @@ class _SplashPageState extends State<SplashPage>
                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             navigateAfterSeconds: _widget,
-            image: Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
+            image: Image.network('https://cdn.gitterapp.com/logo/flutter_boilerplate.png'),
             styleTextUnderTheLoader: const TextStyle(),
             backgroundColor: _theme.colorScheme.background,
             photoSize: 100.0,
@@ -105,7 +105,7 @@ class _SplashPageState extends State<SplashPage>
                 ),
                 navigateAfterSeconds: _widget,
                 image:
-                    Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
+                    Image.network('https://cdn.gitterapp.com/logo/flutter_boilerplate.png'),
                 styleTextUnderTheLoader: const TextStyle(),
                 backgroundColor: _theme.colorScheme.background,
                 photoSize: 100.0,
