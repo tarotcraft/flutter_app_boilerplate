@@ -6,11 +6,9 @@ class FlutterBoilerplateConstants {
 
   static const licenseDialog = 'LICENSE_DIALOG';
 
-  static const authorizationType = 'AUTHORIZATION_TYPE';
+  static const authorizationEmail = 'AUTHORIZATION_EMAIL';
 
-  static const authorizationId = 'AUTHORIZATION_ID';
-
-  static const authorizationToken = 'AUTHORIZATION_TOKEN';
+  static const authorizationPassword = 'AUTHORIZATION_PASSWORD';
 
   static const baseUrl = 'https://api.github.com';
 

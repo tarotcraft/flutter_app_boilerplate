@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
 import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
+import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:flutter_app_boilerplate/ui/pages/login_page.dart';
+import 'package:flutter_app_boilerplate/ui/pages/tab_navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -23,8 +25,8 @@ BannerAd bannerAd = BannerAd(
   adUnitId: kDebugMode
       ? BannerAd.testAdUnitId
       : Platform.isAndroid
-      ? GitterConfig.bannerAppUnitIdAndroid
-      : GitterConfig.bannerAppUnitIdIOS,
+          ? GitterConfig.bannerAppUnitIdAndroid
+          : GitterConfig.bannerAppUnitIdIOS,
   size: AdSize.banner,
   request: const AdRequest(),
   listener: const BannerAdListener(),
@@ -46,7 +48,6 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
-
   @override
   void initState() {
     super.initState();
@@ -68,17 +69,16 @@ class _SplashPageState extends State<SplashPage>
     return FutureBuilder(
       future: loadBannerAdFuture,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if(snapshot.hasError) {
+        if (snapshot.hasError) {
           return SplashScreen.timer(
             seconds: 5,
             title: Text(
               FlutterBoilerplateLocalizations.of(context)!.welcome,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 20.0),
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
-            navigateAfterSeconds: const LoginPage(),
-            image:
-            Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
+            navigateAfterSeconds: _widget,
+            image: Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
             styleTextUnderTheLoader: const TextStyle(),
             backgroundColor: _theme.colorScheme.background,
             photoSize: 100.0,
@@ -87,7 +87,8 @@ class _SplashPageState extends State<SplashPage>
             customLoader: const Loader(
               size: 40,
             ),
-            loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
+            loadingText:
+                Text(FlutterBoilerplateLocalizations.of(context)!.loading),
             loadingTextPadding: const EdgeInsets.only(bottom: 80),
             loaderColor: Color(themeState.color!),
           );
@@ -102,23 +103,26 @@ class _SplashPageState extends State<SplashPage>
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
-                navigateAfterSeconds: const LoginPage(),
+                navigateAfterSeconds: _widget,
                 image:
-                Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
+                    Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
                 styleTextUnderTheLoader: const TextStyle(),
                 backgroundColor: _theme.colorScheme.background,
                 photoSize: 100.0,
-                onClick: () => printInfoLog(FlutterBoilerplateConstants.appName),
+                onClick: () =>
+                    printInfoLog(FlutterBoilerplateConstants.appName),
                 useLoader: true,
                 customLoader: const Loader(
                   size: 40,
                 ),
-                loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
+                loadingText:
+                    Text(FlutterBoilerplateLocalizations.of(context)!.loading),
                 loadingTextPadding: const EdgeInsets.only(bottom: 80),
                 loaderColor: Color(themeState.color!),
               ),
               Positioned(
-                bottom: (Platform.isIOS && MediaQuery.of(context).padding.bottom > 0)
+                bottom: (Platform.isIOS &&
+                        MediaQuery.of(context).padding.bottom > 0)
                     ? 34
                     : 10,
                 child: Container(
@@ -135,8 +139,8 @@ class _SplashPageState extends State<SplashPage>
             shouldNavigate: false,
             title: Text(
               FlutterBoilerplateLocalizations.of(context)!.welcome,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 20.0),
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             image: Image.network('https://cdn.gitterapp.com/logo/gitter.png'),
             styleTextUnderTheLoader: const TextStyle(),
@@ -147,7 +151,8 @@ class _SplashPageState extends State<SplashPage>
             customLoader: const Loader(
               size: 40,
             ),
-            loadingText: Text(FlutterBoilerplateLocalizations.of(context)!.loading),
+            loadingText:
+                Text(FlutterBoilerplateLocalizations.of(context)!.loading),
             loadingTextPadding: const EdgeInsets.only(bottom: 80),
             loaderColor: Color(themeState.color!),
           );
@@ -156,10 +161,16 @@ class _SplashPageState extends State<SplashPage>
     );
   }
 
+  Widget get _widget {
+    return FlutterBoilerplateManager().user == null
+        ? const LoginPage()
+        : const TabNavigator();
+  }
+
   Future<void> _loadBannerAdFuture() async {
     try {
       await bannerAd.load();
-    } on Exception catch(e) {
+    } on Exception catch (e) {
       printErrorLog(e);
     }
   }

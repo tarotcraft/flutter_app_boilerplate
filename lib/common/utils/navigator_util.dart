@@ -14,6 +14,18 @@ class NavigatorUtil {
     );
   }
 
+  static void pushReplacement(
+    BuildContext context,
+    Widget widget, {
+    RouteSettings? settings,
+  }) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => widget, settings: settings),
+    );
+  }
+
   static void pop(BuildContext context) {
     Navigator.pop(context);
   }

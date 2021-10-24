@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
+import 'package:flutter_app_boilerplate/common/utils/cache_util.dart';
 import 'package:flutter_app_boilerplate/ui/pages/flutter_boilerplate_app.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -129,9 +132,11 @@ Future main() async {
   }
 
   // 从iCloud中下载个人认证信息
-  if(Platform.isIOS) {
+  if (Platform.isIOS) {
     await _downFileFromICloud();
   }
+
+  await _loadUserData();
 
   final packageInfo = await PackageInfo.fromPlatform();
   FlutterBoilerplateManager()
@@ -157,6 +162,22 @@ Future main() async {
       ),
     ),
   );
+}
+
+Future<void> _loadUserData() async {
+  var authorizationEmail =
+      await CacheUtil.getCache(FlutterBoilerplateConstants.authorizationEmail);
+  var authorizationPassword = await CacheUtil.getCache(
+      FlutterBoilerplateConstants.authorizationPassword);
+  if (authorizationEmail != null && authorizationPassword != null) {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: authorizationEmail, password: authorizationPassword);
+    User? user = userCredential.user;
+    if (user != null) {
+      FlutterBoilerplateManager().user = user;
+    }
+  }
 }
 
 Future<void> _downFileFromICloud() async {

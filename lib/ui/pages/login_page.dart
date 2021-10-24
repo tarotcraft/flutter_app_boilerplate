@@ -1,17 +1,16 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
+import 'package:flutter_app_boilerplate/common/utils/cache_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
+import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
+import 'package:flutter_app_boilerplate/common/utils/object_util.dart';
 import 'package:flutter_app_boilerplate/ui/pages/tab_navigator.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-const users = {
-  'dribbble@gmail.com': '12345',
-  'hunter@gmail.com': 'hunter',
-};
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,42 +20,84 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Duration get loginTime => Duration(milliseconds: 2250);
+  Duration get loginTime => const Duration(milliseconds: 2250);
 
-  Future<String?> _authUser(LoginData data) {
-    printWarningLog('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
+  Future<String?> _authUser(LoginData data) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: data.name,
+          password: data.password
+      );
+      User? user = userCredential.user;
+      if (user!= null) {
+        FlutterBoilerplateManager().user = user;
+        await CacheUtil.setCache(FlutterBoilerplateConstants.authorizationEmail, data.name);
+        await CacheUtil.setCache(FlutterBoilerplateConstants.authorizationPassword, data.password);
+        NavigatorUtil.pushReplacement(context, const TabNavigator());
+        if (!user.emailVerified) {
+          await user.sendEmailVerification();
+        }
       }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
+    } on FirebaseAuthException catch (e) {
+      printErrorLog(e);
+      if (e.code == 'user-not-found') {
+        return 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        return 'Wrong password provided for that user.';
       }
-      return null;
-    });
+    } catch (e) {
+      printErrorLog(e);
+    }
+    return null;
   }
 
-  Future<String?> _recoverPassword(String name) {
-    printWarningLog('Name: $name');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'User not exists';
+  Future<String?> _recoverPassword(String name) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: name);
+    } on FirebaseAuthException catch (e) {
+      printErrorLog(e);
+      if (e.code == 'user-not-found') {
+        return 'No user found for that email.';
       }
-      return null;
-    });
+    } catch (e) {
+      printErrorLog(e);
+    }
+    return null;
   }
 
-  Future<String?> _signupUser(SignupData data) {
-    printWarningLog('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
+  Future<String?> _signupUser(SignupData data) async {
+    if(ObjectUtil.isNull(data.name)) {
+      return "email is empty";
+    }
+    if(ObjectUtil.isNull(data.password)) {
+      return "password is empty";
+    }
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: data.name!,
+          password: data.password!
+      );
+      User? user = userCredential.user;
+      if (user!= null) {
+        FlutterBoilerplateManager().user = user;
+        await CacheUtil.setCache(FlutterBoilerplateConstants.authorizationEmail, data.name);
+        await CacheUtil.setCache(FlutterBoilerplateConstants.authorizationPassword, data.password);
+        NavigatorUtil.pushReplacement(context, const TabNavigator());
+        if (!user.emailVerified) {
+          await user.sendEmailVerification();
+        }
       }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
+    } on FirebaseAuthException catch (e) {
+      printErrorLog(e);
+      if (e.code == 'weak-password') {
+        return 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        return 'The account already exists for that email.';
       }
-      return null;
-    });
+    } catch (e) {
+      printErrorLog(e);
+    }
+    return null;
   }
 
   @override

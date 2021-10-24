@@ -1,6 +1,7 @@
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
 class FlutterBoilerplateManager {
@@ -9,6 +10,7 @@ class FlutterBoilerplateManager {
   BuildContext? context;
   FirebaseAnalytics? analytics;
   FirebaseAnalyticsObserver? observer;
+  User? user;
 
   // 单例公开访问点
   factory FlutterBoilerplateManager() => _gitterManager()!;

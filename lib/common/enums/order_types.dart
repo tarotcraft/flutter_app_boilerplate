@@ -1,5 +1,0 @@
-
-enum OrderTypes {
-  desc,
-  asc,
-}
