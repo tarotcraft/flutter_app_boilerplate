@@ -8,6 +8,9 @@ import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
 import 'package:flutter_app_boilerplate/ui/pages/login_page.dart';
 import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
 
+const String urlString = 'https://store.gitterapp.com/cart';
+// const String urlString = 'http://localhost:8080/cart';
+
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
 
