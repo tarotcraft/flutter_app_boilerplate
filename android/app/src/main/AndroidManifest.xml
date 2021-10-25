@@ -84,7 +84,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="your application id" />
+            android:value="ca-app-pub-3943836014370168~8328144716" />
 
         <!-- huawei push start -->
         <receiver android:name="FlutterBoilerplateHomeWidgetProvider" >
