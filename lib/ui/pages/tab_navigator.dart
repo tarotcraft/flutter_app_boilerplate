@@ -37,7 +37,7 @@ Map<String, Widget> pageMap = {
 };
 
 const schemes = ['https', 'flutter_boilerplate'];
-const defaultHost = 'store.gitterapp.com';
+const defaultHost = 'boilerplate.gitter.app';
 
 class TabNavigator extends StatefulWidget {
   const TabNavigator({Key? key}) : super(key: key);

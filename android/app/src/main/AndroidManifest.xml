@@ -74,7 +74,7 @@
                 <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
                         android:scheme="https"
-                        android:host="store.gitterapp.com" />
+                        android:host="boilerplate.gitter.app" />
             </intent-filter>
         </activity>
 
