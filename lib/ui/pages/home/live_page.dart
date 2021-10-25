@@ -12,7 +12,8 @@ class LivePage extends StatefulWidget {
   _LivePageState createState() => _LivePageState();
 }
 
-class _LivePageState extends State<LivePage> {
+class _LivePageState extends State<LivePage>
+    with AutomaticKeepAliveClientMixin {
   late YoutubePlayerController _controller;
   late TextEditingController _idController;
   late TextEditingController _seekToController;
@@ -404,6 +405,9 @@ class _LivePageState extends State<LivePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class VideoList extends StatefulWidget {

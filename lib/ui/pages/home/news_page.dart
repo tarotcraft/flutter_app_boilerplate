@@ -8,8 +8,10 @@ class NewsPage extends StatefulWidget {
   _NewsPageState createState() => _NewsPageState();
 }
 
-class _NewsPageState extends State<NewsPage> {
-  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+class _NewsPageState extends State<NewsPage>
+    with AutomaticKeepAliveClientMixin {
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
   @override
@@ -21,19 +23,15 @@ class _NewsPageState extends State<NewsPage> {
       footer: CustomFooter(
         builder: (BuildContext context, LoadStatus? mode) {
           Widget? body;
-          if(mode == LoadStatus.idle) {
+          if (mode == LoadStatus.idle) {
             body = const Text("pull up load");
-          }
-          else if(mode == LoadStatus.loading) {
+          } else if (mode == LoadStatus.loading) {
             body = const CircularProgressIndicator();
-          }
-          else if(mode == LoadStatus.failed) {
+          } else if (mode == LoadStatus.failed) {
             body = const Text("Load Failed!Click retry!");
-          }
-          else if(mode == LoadStatus.canLoading) {
+          } else if (mode == LoadStatus.canLoading) {
             body = const Text("release to load more");
-          }
-          else {
+          } else {
             body = const Text("No more Data");
           }
           return SizedBox(
@@ -46,27 +44,30 @@ class _NewsPageState extends State<NewsPage> {
       onRefresh: _onRefresh,
       onLoading: _onLoading,
       child: ListView.builder(
-        itemBuilder: (c, i) => Card(child: Center(child: Text("news ${items[i]}"))),
+        itemBuilder: (c, i) =>
+            Card(child: Center(child: Text("news ${items[i]}"))),
         itemExtent: 100.0,
         itemCount: items.length,
       ),
     );
   }
 
-  void _onRefresh() async{
+  void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
-  void _onLoading() async{
+  void _onLoading() async {
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     items.add((items.length + 1).toString());
-    if(mounted)
-      setState(() {});
+    if (mounted) setState(() {});
     _refreshController.loadComplete();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

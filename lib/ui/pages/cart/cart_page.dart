@@ -22,9 +22,10 @@ class CartPage extends StatefulWidget {
   _CartPageState createState() => _CartPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _CartPageState extends State<CartPage>
+    with AutomaticKeepAliveClientMixin {
   static const EdgeInsetsGeometry _padding =
-  EdgeInsets.only(left: 14, right: 8);
+      EdgeInsets.only(left: 14, right: 8);
   static const EdgeInsetsGeometry _margin = EdgeInsets.only(top: 8);
 
   InAppWebViewController? _appWebViewController;
@@ -102,7 +103,7 @@ class _CartPageState extends State<CartPage> {
             BlocListener<DarkModeBloc, DarkModeState>(
               listener: (context, state) async {
                 var isDarkMode =
-                DarkModeUtil.isDarkMode(context, state.themeMode);
+                    DarkModeUtil.isDarkMode(context, state.themeMode);
                 var data = {
                   "darkMode": isDarkMode ? 'dark' : 'light',
                 };
@@ -130,7 +131,7 @@ class _CartPageState extends State<CartPage> {
           child: Stack(
             children: [
               _storeContent,
-              if(_loading) ...[
+              if (_loading) ...[
                 const Center(
                   child: Loader(),
                 )
@@ -149,7 +150,7 @@ class _CartPageState extends State<CartPage> {
               AndroidWebViewFeature.CREATE_WEB_MESSAGE_CHANNEL)) {
         // wait until the page is loaded, and then create the Web Message Channel
         var webMessageChannel =
-        await _appWebViewController!.createWebMessageChannel();
+            await _appWebViewController!.createWebMessageChannel();
         var port1 = webMessageChannel!.port1;
         var port2 = webMessageChannel.port2;
 
@@ -181,4 +182,7 @@ class _CartPageState extends State<CartPage> {
         DateTime.now().add(const Duration(days: 7)).millisecondsSinceEpoch;
     // TODO: do something.
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

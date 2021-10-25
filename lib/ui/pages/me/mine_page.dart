@@ -21,7 +21,8 @@ class MinePage extends StatefulWidget {
   _MinePageState createState() => _MinePageState();
 }
 
-class _MinePageState extends State<MinePage> {
+class _MinePageState extends State<MinePage>
+    with AutomaticKeepAliveClientMixin {
   static const EdgeInsetsGeometry _padding =
       EdgeInsets.only(left: 14, right: 8);
   static const EdgeInsetsGeometry _margin = EdgeInsets.only(top: 8);
@@ -72,7 +73,8 @@ class _MinePageState extends State<MinePage> {
     );
   }
 
-  Future<void> _handleRefresh() async {
-  }
+  Future<void> _handleRefresh() async {}
 
+  @override
+  bool get wantKeepAlive => true;
 }

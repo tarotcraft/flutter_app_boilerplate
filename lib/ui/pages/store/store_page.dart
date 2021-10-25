@@ -22,7 +22,8 @@ class StorePage extends StatefulWidget {
   _StorePageState createState() => _StorePageState();
 }
 
-class _StorePageState extends State<StorePage> {
+class _StorePageState extends State<StorePage>
+    with AutomaticKeepAliveClientMixin {
   static const EdgeInsetsGeometry _padding =
       EdgeInsets.only(left: 14, right: 8);
   static const EdgeInsetsGeometry _margin = EdgeInsets.only(top: 8);
@@ -130,7 +131,7 @@ class _StorePageState extends State<StorePage> {
           child: Stack(
             children: [
               _storeContent,
-              if(_loading) ...[
+              if (_loading) ...[
                 const Center(
                   child: Loader(),
                 )
@@ -181,4 +182,7 @@ class _StorePageState extends State<StorePage> {
         DateTime.now().add(const Duration(days: 7)).millisecondsSinceEpoch;
     // TODO: do something.
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
