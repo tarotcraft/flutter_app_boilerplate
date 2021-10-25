@@ -1,15 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
-import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
-import 'package:flutter_app_boilerplate/common/utils/cache_util.dart';
-import 'package:flutter_app_boilerplate/common/utils/navigator_util.dart';
-import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
-import 'package:flutter_app_boilerplate/ui/pages/login_page.dart';
+import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
+import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
+import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
+import 'package:flutter_app_boilerplate/ui/blocs/me/l10n/l10n_bloc.dart';
+import 'package:flutter_app_boilerplate/ui/blocs/me/theme/theme_bloc.dart';
+import 'package:flutter_app_boilerplate/ui/widgets/loader.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/flutter_boilerplate_localizations.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const String urlString = 'https://store.gitterapp.com/cart';
-// const String urlString = 'http://localhost:8080/cart';
+// const String urlString = 'http://localhost:8080/cart.html';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -19,73 +23,162 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  static const EdgeInsetsGeometry _padding =
+  EdgeInsets.only(left: 14, right: 8);
+  static const EdgeInsetsGeometry _margin = EdgeInsets.only(top: 8);
+
+  InAppWebViewController? _appWebViewController;
+  bool _loading = false;
+
   @override
   Widget build(BuildContext context) {
+    var _storeContent = Container(
+      margin: _margin,
+      padding: _padding,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: InAppWebView(
+          initialUrlRequest: URLRequest(
+            url: Uri.tryParse(urlString),
+          ),
+          initialOptions: InAppWebViewGroupOptions(
+            crossPlatform: InAppWebViewOptions(
+              cacheEnabled: false,
+              clearCache: true,
+            ),
+          ),
+          onWebViewCreated: (InAppWebViewController controller) async {
+            setState(() {
+              _loading = true;
+            });
+            _appWebViewController = controller;
+            await _initCookieManager();
+          },
+          onLoadError: (InAppWebViewController controller, Uri? url, int code,
+              String message) {
+            printErrorLog('code: $code, message: $message');
+          },
+          onLoadHttpError: (InAppWebViewController controller, Uri? url,
+              int statusCode, String description) {
+            printErrorLog('statusCode: $statusCode, description: $description');
+          },
+          onLoadStop: (InAppWebViewController controller, Uri? url) async {
+            setState(() {
+              _loading = false;
+            });
+            var themeMode =
+                BlocProvider.of<DarkModeBloc>(context).state.themeMode;
+            var defaultLocale = WidgetsBinding.instance!.window.locale;
+            var locale = BlocProvider.of<L10nBloc>(context).state.locale ??
+                defaultLocale;
+            var isDarkMode = DarkModeUtil.isDarkMode(context, themeMode);
+            var color = BlocProvider.of<ThemeBloc>(context).state.color ??
+                Theme.of(context).primaryColor;
+            var data = {
+              "darkMode": isDarkMode ? 'dark' : 'light',
+              "locale": locale.toString(),
+              "color": color
+            };
+            await _transportToWeb(json.encode(data));
+          },
+          onConsoleMessage: (InAppWebViewController controller,
+              ConsoleMessage consoleMessage) {
+            printWarningLog('consoleMessage: $consoleMessage');
+          },
+        ),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           FlutterBoilerplateLocalizations.of(context)!.tabCartTitle,
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "displayName: ${FlutterBoilerplateManager().user?.displayName}"),
+      body: RefreshIndicator(
+        onRefresh: _handleRefresh,
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<DarkModeBloc, DarkModeState>(
+              listener: (context, state) async {
+                var isDarkMode =
+                DarkModeUtil.isDarkMode(context, state.themeMode);
+                var data = {
+                  "darkMode": isDarkMode ? 'dark' : 'light',
+                };
+                await _transportToWeb(json.encode(data));
+              },
+            ),
+            BlocListener<L10nBloc, L10nState>(
+              listener: (context, state) async {
+                var defaultLocale = WidgetsBinding.instance!.window.locale;
+                var locale = state.locale ?? defaultLocale;
+                var data = {
+                  "locale": locale.toString(),
+                };
+                await _transportToWeb(json.encode(data));
+              },
+            ),
+            BlocListener<ThemeBloc, ThemeState>(
+              listener: (context, state) async {
+                var color = state.color ?? Theme.of(context).primaryColor;
+                var data = {"color": color};
+                await _transportToWeb(json.encode(data));
+              },
+            ),
+          ],
+          child: Stack(
+            children: [
+              _storeContent,
+              if(_loading) ...[
+                const Center(
+                  child: Loader(),
+                )
+              ],
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "email: ${FlutterBoilerplateManager().user?.email}"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "emailVerified: ${FlutterBoilerplateManager().user?.emailVerified}"),
-          ),Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "isAnonymous: ${FlutterBoilerplateManager().user?.isAnonymous}"),
-          ),Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "phoneNumber: ${FlutterBoilerplateManager().user?.phoneNumber}"),
-          ),Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "photoURL: ${FlutterBoilerplateManager().user?.photoURL}"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "refreshToken: ${FlutterBoilerplateManager().user?.refreshToken}"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "tenantId: ${FlutterBoilerplateManager().user?.tenantId}"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-                "uid: ${FlutterBoilerplateManager().user?.uid}"),
-          ),
-          TextButton(
-            onPressed: () async {
-              FirebaseAuth.instance.signOut();
-              await CacheUtil.setCache(
-                  FlutterBoilerplateConstants.authorizationEmail,
-                  StringUtil.empty);
-              await CacheUtil.setCache(
-                  FlutterBoilerplateConstants.authorizationPassword,
-                  StringUtil.empty);
-              NavigatorUtil.push(context, const LoginPage());
-            },
-            child: const Text("Logout"),
-          )
-        ],
+        ),
       ),
     );
+  }
+
+  Future<void> _transportToWeb(data) async {
+    if (_appWebViewController != null) {
+      if (!Platform.isAndroid ||
+          await AndroidWebViewFeature.isFeatureSupported(
+              AndroidWebViewFeature.CREATE_WEB_MESSAGE_CHANNEL)) {
+        // wait until the page is loaded, and then create the Web Message Channel
+        var webMessageChannel =
+        await _appWebViewController!.createWebMessageChannel();
+        var port1 = webMessageChannel!.port1;
+        var port2 = webMessageChannel.port2;
+
+        // set the web message callback for the port1
+        await port1.setWebMessageCallback((message) async {
+          printWarningLog("Message coming from the JavaScript side: $message");
+          // when it receives a message from the JavaScript side, respond back with another message.
+          await port1.postMessage(WebMessage(data: message! + " and back"));
+        });
+
+        // transfer port2 to the webpage to initialize the communication
+        await _appWebViewController!.postWebMessage(
+            message: WebMessage(data: data, ports: [port2]),
+            targetOrigin: Uri.parse("*"));
+      }
+    }
+  }
+
+  Future<void> _handleRefresh() async {
+    setState(() {
+      _loading = true;
+    });
+    _transportToWeb(json.encode({"pullDown": true}));
+  }
+
+  Future<void> _initCookieManager() async {
+    Uri? url = Uri.tryParse(urlString);
+    final expiresDate =
+        DateTime.now().add(const Duration(days: 7)).millisecondsSinceEpoch;
+    // TODO: do something.
   }
 }
