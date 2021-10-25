@@ -166,10 +166,12 @@ Future main() async {
 }
 
 Future<void> _loadUserData() async {
-  var authorizationEmail =
-      await CacheUtil.getCache(FlutterBoilerplateConstants.authorizationEmail);
+  var authorizationEmail = await CacheUtil.getCache(
+      FlutterBoilerplateConstants.authorizationEmail,
+      checkValidTimes: false);
   var authorizationPassword = await CacheUtil.getCache(
-      FlutterBoilerplateConstants.authorizationPassword);
+      FlutterBoilerplateConstants.authorizationPassword,
+      checkValidTimes: false);
   if (StringUtil.isNotBlank(authorizationEmail) &&
       StringUtil.isNotBlank(authorizationPassword)) {
     UserCredential userCredential = await FirebaseAuth.instance
