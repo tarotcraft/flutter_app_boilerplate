@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_boilerplate/common/constant/store_constants.dart';
 import 'package:flutter_app_boilerplate/common/utils/dark_mode_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
+import 'package:flutter_app_boilerplate/ui/blocs/bottom_tabs/bottom_tabs_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/dark_mode/dark_mode_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/l10n/l10n_bloc.dart';
 import 'package:flutter_app_boilerplate/ui/blocs/me/theme/theme_bloc.dart';
@@ -125,6 +127,13 @@ class _StorePageState extends State<StorePage>
                 var color = state.color ?? Theme.of(context).primaryColor;
                 var data = {"color": color};
                 await _transportToWeb(json.encode(data));
+              },
+            ),
+            BlocListener<BottomTabsBloc, BottomTabsState>(
+              listener: (context, state) async {
+                if(state.refresh && state.module == StoreConstants.module) {
+                  await _transportToWeb(json.encode({"pullDown": true}));
+                }
               },
             ),
           ],
