@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
+import 'package:flutter_app_boilerplate/common/config/flutter_app_boilerplate_config.dart';
 import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:flutter_app_boilerplate/ui/pages/login_page.dart';
@@ -25,8 +25,8 @@ BannerAd bannerAd = BannerAd(
   adUnitId: kDebugMode
       ? BannerAd.testAdUnitId
       : Platform.isAndroid
-          ? GitterConfig.bannerAppUnitIdAndroid
-          : GitterConfig.bannerAppUnitIdIOS,
+          ? FlutterBoilerplateConfig.bannerAppUnitIdAndroid
+          : FlutterBoilerplateConfig.bannerAppUnitIdIOS,
   size: AdSize.banner,
   request: const AdRequest(),
   listener: const BannerAdListener(),

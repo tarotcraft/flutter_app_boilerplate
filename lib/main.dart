@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app_boilerplate/common/config/flutter_app_boilerplate_config.dart';
 import 'package:flutter_app_boilerplate/common/constant/flutter_boilerplate_constants.dart';
 import 'package:flutter_app_boilerplate/common/utils/cache_util.dart';
 import 'package:flutter_app_boilerplate/common/utils/string_util.dart';
@@ -28,7 +29,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter_app_boilerplate/ui/blocs/bloc_providers.dart';
-import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
 import 'package:flutter_app_boilerplate/common/flutter_app_boilerplate_manager.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -149,7 +149,7 @@ Future main() async {
   await SentryFlutter.init(
     (options) {
       options
-        ..dsn = GitterConfig.sentryDSN
+        ..dsn = FlutterBoilerplateConfig.sentryDSN
         ..reportSilentFlutterErrors = true;
     },
     appRunner: () => runApp(

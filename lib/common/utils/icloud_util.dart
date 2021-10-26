@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_app_boilerplate/common/config/gitter_config.dart';
+import 'package:flutter_app_boilerplate/common/config/flutter_app_boilerplate_config.dart';
 import 'package:flutter_app_boilerplate/common/utils/logger_util.dart';
 import 'package:icloud_storage/icloud_storage.dart';
 
@@ -10,7 +10,7 @@ class ICloudUtil {
   static Future<void> downloadFileFormICloud(String fileName, String destinationFilePath) async {
     try {
       final iCloudStorage =
-          await ICloudStorage.getInstance(GitterConfig.iCloudContainerId);
+          await ICloudStorage.getInstance(FlutterBoilerplateConfig.iCloudContainerId);
       StreamSubscription<double>? downloadProgressSubscription;
       var isDownloadComplete = false;
 
@@ -46,7 +46,7 @@ class ICloudUtil {
   static Future<void> uploadFileToICloud(String destinationFilePath, String fileName) async {
     try {
       final iCloudStorage =
-          await ICloudStorage.getInstance(GitterConfig.iCloudContainerId);
+          await ICloudStorage.getInstance(FlutterBoilerplateConfig.iCloudContainerId);
       StreamSubscription<double>? uploadProgressSubscription;
       var isUploadComplete = false;
 

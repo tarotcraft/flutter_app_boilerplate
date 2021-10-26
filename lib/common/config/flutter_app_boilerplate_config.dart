@@ -1,5 +1,5 @@
 
-class GitterConfig {
+class FlutterBoilerplateConfig {
 
   static const bannerAppUnitIdAndroid = 'ca-app-pub-3943836014370168/5052272351';
 
