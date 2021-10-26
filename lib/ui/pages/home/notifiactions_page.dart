@@ -16,6 +16,7 @@ class _NotificationsPageState extends State<NotificationsPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,

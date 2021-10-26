@@ -35,6 +35,7 @@ class _CartPageState extends State<CartPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var _storeContent = Container(
       margin: _margin,
       padding: _padding,

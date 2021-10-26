@@ -83,6 +83,7 @@ class _LivePageState extends State<LivePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return YoutubePlayerBuilder(
       onExitFullScreen: () {
         // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
@@ -159,7 +160,7 @@ class _LivePageState extends State<LivePage>
                   controller: _idController,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Enter youtube \<video id\> or \<link\>',
+                    hintText: 'Enter youtube <video id> or <link>',
                     fillColor: Colors.blueAccent.withAlpha(20),
                     filled: true,
                     hintStyle: const TextStyle(

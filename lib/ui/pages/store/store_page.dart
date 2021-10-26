@@ -36,6 +36,7 @@ class _StorePageState extends State<StorePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var _storeContent = Container(
       margin: _margin,
       padding: _padding,

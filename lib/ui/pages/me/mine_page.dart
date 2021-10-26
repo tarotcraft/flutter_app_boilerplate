@@ -31,6 +31,7 @@ class _MinePageState extends State<MinePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<DarkModeBloc, DarkModeState>(
       builder: (ctx, darkModeState) => Scaffold(
         appBar: AppBar(

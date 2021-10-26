@@ -16,6 +16,7 @@ class _NewsPageState extends State<NewsPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
