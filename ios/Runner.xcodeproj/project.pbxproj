@@ -22,6 +22,7 @@
 		2E98563B263D0FA300AEC222 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E98563A263D0FA300AEC222 /* libz.1.2.5.tbd */; };
 		2EBBF0E526394683006155AF /* FlutterBoilerplateHomeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2EBBF0E826394683006155AF /* FlutterBoilerplateHomeWidget.intentdefinition */; };
 		2EBBF0E626394683006155AF /* FlutterBoilerplateHomeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2EBBF0E826394683006155AF /* FlutterBoilerplateHomeWidget.intentdefinition */; };
+		2EC1C089272795EF00081D46 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC1C088272795EF00081D46 /* NetworkExtension.framework */; };
 		2EF104172719561500E6BA39 /* BDSClientResources in Resources */ = {isa = PBXBuildFile; fileRef = 2EF104162719561500E6BA39 /* BDSClientResources */; };
 		2EF104242719562200E6BA39 /* libBaiduSpeechSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF1041A2719562100E6BA39 /* libBaiduSpeechSDK.a */; };
 		2EF104262719562200E6BA39 /* bds_license.dat in Resources */ = {isa = PBXBuildFile; fileRef = 2EF1041C2719562100E6BA39 /* bds_license.dat */; };
@@ -109,6 +110,7 @@
 		2E985638263D0F9000AEC222 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		2E98563A263D0FA300AEC222 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		2EBBF0E726394683006155AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/FlutterBoilerplateHomeWidget.intentdefinition; sourceTree = "<group>"; };
+		2EC1C088272795EF00081D46 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		2EC253EF2646DBD3002DDF77 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2EC253F02646DBD3002DDF77 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2EC253F12646DBD3002DDF77 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/FlutterBoilerplateHomeWidget.strings"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				2E985637263D0F7B00AEC222 /* libiconv.2.4.0.tbd in Frameworks */,
 				2E985635263D0F6500AEC222 /* libsqlite3.0.tbd in Frameworks */,
 				2E985633263D0F5D00AEC222 /* CoreTelephony.framework in Frameworks */,
+				2EC1C089272795EF00081D46 /* NetworkExtension.framework in Frameworks */,
 				2EF104242719562200E6BA39 /* libBaiduSpeechSDK.a in Frameworks */,
 				A3784B213913056A14EFB802 /* Pods_Runner.framework in Frameworks */,
 			);
@@ -329,6 +332,7 @@
 		A386AD761F0513D619CBDBF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2EC1C088272795EF00081D46 /* NetworkExtension.framework */,
 				2EF104442719570F00E6BA39 /* libsqlite3.tbd */,
 				2E98563A263D0FA300AEC222 /* libz.1.2.5.tbd */,
 				2E985638263D0F9000AEC222 /* libc++.tbd */,
