@@ -93,7 +93,7 @@ class _FlutterBoilerplateAppState extends State<FlutterBoilerplateApp> {
       Upgrader().clearSavedSettings();
     }
     final appcastPrefix = kDebugMode ? '/test' : '';
-    final appcastURL = 'https://gitter.app/upgrader$appcastPrefix/appcast.xml';
+    final appcastURL = 'https://boilerplate.gitter.app/upgrader$appcastPrefix/appcast.xml';
     final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
     return BlocBuilder<DarkModeBloc, DarkModeState>(
       builder: (context, state) => BlocBuilder<L10nBloc, L10nState>(
